@@ -1,6 +1,5 @@
 const User = require('../model/userModel')
 const generateToken = require('../utils/generateToken')
-const cookieParser = require('cookie-parser')
 
 
 
@@ -55,15 +54,20 @@ const loginController = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send("Intenal Server Error")
+        res.status(500).send("Intenal Server Error")
     }
 }
 
 
 
 const logoutController = async (req, res) => {
-    res.cookie('token', '', { maxAge: 1 })
-    res.status(200).json({ msg: "User logged out successfully" })
+    try {
+        res.cookie('token', '', { maxAge: 1 })
+        res.status(200).json({ msg: "User logged out successfully" })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: error })
+    }
 }
 
 

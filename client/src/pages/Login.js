@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        toast.success(location?.state?.toastMessage)
+    }, [location])
 
 
     const handleLogin = async () => {
         try {
-            const { data } = await axios.post('http://localhost:5000/api/user/login',
+            await axios.post('http://localhost:5000/api/user/login',
                 {
                     email, password
                 }, { withCredentials: true }
             )
-            console.log(data)
-            navigate('/home')
+
+            navigate('/home', { state: { toastMessage: 'User loggedin successfully' } })
+
         } catch (error) {
             if (error.response) {
                 if (error.response.data.errors) {
@@ -37,8 +43,11 @@ const Login = () => {
         <div className='container'>
             <div className='register'>
                 <div className='inputs'
-                    style={{ marginTop: '6rem' }}
+                    style={{ marginTop: '3rem' }}
                 >
+                    <div className='heading'>
+                        <h2>Please Login!!</h2>
+                    </div>
                     <input
                         type="email"
                         placeholder='Enter Email'

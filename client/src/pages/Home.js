@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios'
@@ -10,12 +10,16 @@ import axios from 'axios'
 const Home = () => {
     const [users, setUsers] = useState([])
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        toast.success(location?.state?.toastMessage)
+    }, [location])
 
     useEffect(() => {
         const getAllUsers = async () => {
             try {
                 const { data } = await axios.get('http://localhost:5000/api/user/get-users', { withCredentials: true })
-                console.log(data.users)
                 setUsers(data.users)
             } catch (error) {
                 console.log(error)
@@ -28,8 +32,7 @@ const Home = () => {
 
     const handleLogout = async () => {
         try {
-            const { data } = await axios.post('http://localhost:5000/api/user/logout', {}, { withCredentials: true })
-            console.log(data)
+            await axios.post('http://localhost:5000/api/user/logout', {}, { withCredentials: true })
             navigate('/')
         } catch (error) {
             console.log(error)

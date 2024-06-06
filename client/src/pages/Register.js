@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
@@ -17,8 +17,8 @@ const Register = () => {
             const { data } = await axios.post('http://localhost:5000/api/user/register', {
                 username, email, password
             })
-            console.log(data)
-            navigate('/')
+            navigate('/', { state: { toastMessage: data.msg } })
+
         } catch (error) {
             if (error.response) {
                 if (error.response.data.errors) {
@@ -35,7 +35,12 @@ const Register = () => {
     return (
         <div className='container'>
             <div className='register'>
-                <div className='inputs'>
+                <div className='inputs'
+                    style={{ marginTop: '2rem' }}
+                >
+                    <div className='heading'>
+                        <h2>Please Register!!</h2>
+                    </div>
                     <input
                         type="text"
                         placeholder='Enter Username'

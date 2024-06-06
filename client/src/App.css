@@ -24,6 +24,12 @@
   background-color: #fff;
 }
 
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .inputs {
   display: flex;
   flex-direction: column;
@@ -75,7 +81,7 @@ a {
 
 
 .home {
-  height: 120vh;
+  height: auto;
   width: 100%;
   background-color: #eee6e6;
 }
@@ -152,7 +158,8 @@ a {
   }
 
   .navbar>h1 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
   }
 
   .home {
@@ -161,7 +168,17 @@ a {
 
   .users-container {
     display: flex;
+    width: auto;
     flex-direction: column;
+  }
+
+  .logout {
+    font-size: 1rem;
+    width: auto;
+  }
+
+  .user-card {
+    width: auto;
   }
 }
 
